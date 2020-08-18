@@ -3,8 +3,8 @@ package links
 import (
 	"log"
 
-	database "github.com/glyphack/go-graphql-server-demo/internal/pkg/db/mysql"
-	"github.com/glyphack/go-graphql-server-demo/internal/users"
+	database "github.com/ashwamegh/go-graphql-server-demo/internal/pkg/db/mysql"
+	"github.com/ashwamegh/go-graphql-server-demo/internal/users"
 )
 
 // #1

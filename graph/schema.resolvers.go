@@ -6,19 +6,19 @@ package graph
 import (
 	"context"
 	"fmt"
+	"strconv"
 
 	"github.com/ashwamegh/go-graphql-server-demo/graph/generated"
 	"github.com/ashwamegh/go-graphql-server-demo/graph/model"
+	"github.com/ashwamegh/go-graphql-server-demo/internal/links"
 )
 
 func (r *mutationResolver) CreateLink(ctx context.Context, input model.NewLink) (*model.Link, error) {
-	var link model.Link
-	var user model.User
-	link.Address = input.Address
+	var link links.Link
 	link.Title = input.Title
-	user.Name = "test"
-	link.User = &user
-	return &link, nil
+	link.Address = input.Address
+	linkID := link.Save()
+	return &model.Link{ID: strconv.FormatInt(linkID, 10), Title: link.Title, Address: link.Address}, nil
 }
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (string, error) {

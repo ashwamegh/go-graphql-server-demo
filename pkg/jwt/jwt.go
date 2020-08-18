@@ -1,7 +1,10 @@
+package jwt
+
 import (
-	"github.com/dgrijalva/jwt-go"
 	"log"
 	"time"
+
+	"github.com/dgrijalva/jwt-go"
 )
 
 // secret key being used to sign tokens

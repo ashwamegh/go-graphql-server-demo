@@ -5,10 +5,14 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/99designs/gqlgen/handler"
-	hackernews "github.com/ashwamegh/go-graphql-server-demo"
+	"github.com/ashwamegh/go-graphql-server-demo/graph"
+	"github.com/ashwamegh/go-graphql-server-demo/graph/generated"
 	"github.com/ashwamegh/go-graphql-server-demo/internal/auth"
+	_ "github.com/ashwamegh/go-graphql-server-demo/internal/auth"
 	database "github.com/ashwamegh/go-graphql-server-demo/internal/pkg/db/mysql"
+
+	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi"
 )
 
@@ -26,8 +30,8 @@ func main() {
 
 	database.InitDB()
 	database.Migrate()
-	server := handler.GraphQL(hackernews.NewExecutableSchema(hackernews.Config{Resolvers: &hackernews.Resolver{}}))
-	router.Handle("/", handler.Playground("GraphQL playground", "/query"))
+	server := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	router.Handle("/query", server)
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
